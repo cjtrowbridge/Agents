@@ -9,7 +9,7 @@ instance (for example `http://localhost:11434/v1`). If this variable is not
 provided, the notebook defaults to `http://docker-ai:11434/v1`.
 
 If the server is unreachable, the notebook may appear to hang while waiting for
-model responses. You can verify connectivity by running `curl $OLLAMA_BASE_URL/models`
+model responses. You can verify connectivity by running `curl $OLLAMA_BASE_URL/api/tags`
 or by executing the first cell in `agent_notebook.ipynb`, which now checks for
 available models before the agents start.
 
