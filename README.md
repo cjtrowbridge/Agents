@@ -3,7 +3,7 @@ Me learning how to build a self-hosted agentic pipeline using ollama, jupyter, a
 
 ## Projects
 
-basic-diy.ipynb is me starting completely from scratch and figuring out how to get autogen to work and actually have a bunch of agents collaborate to do something, completely from scratch without reading the documentation first.
+- [basic-diy.ipynb](https://github.com/cjtrowbridge/Agents/blob/main/basic-diy.ipynb) is me starting completely from scratch and figuring out how to get autogen to work and actually have a bunch of agents collaborate to do something, completely from scratch without reading the documentation first.
 
 ## What, How, Why?
 
