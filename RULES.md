@@ -230,6 +230,7 @@ Current playbooks:
 * `./playbooks/how_to_move_kanban_tasks_verbatim.md` - Verbatim-only kanban move workflow that preserves exact task text.
 * `./playbooks/how_to_review_changes_for_risk_and_regression.md` - Bug/risk-first review workflow for code and documentation changes.
 * `./playbooks/how_to_add_or_modify_a_tool_wrapper_safely.md` - Safety-first workflow for adding or changing tool wrappers and tool integrations.
+* `./playbooks/how_to_add_or_modify_hud_tab_contents.md` - Layout and lifecycle workflow for responsive, non-overlapping HUD tab body content.
 * `./playbooks/how_to_use_downtime_to_improve_the_framework.md` - Periodic framework maintenance workflow using a tracked downtime task catalog.
 
 ### References Index
@@ -284,4 +285,3 @@ The README must be updated when project organization changes in a way that affec
 ## 6. Logging & Debugging Standards
 *   **Requirement**: The project must include comprehensive logging and debugging capabilities.
 *   **Implementation**: Any new feature or module must include appropriate logging statements to facilitate troubleshooting and performance monitoring.
-
