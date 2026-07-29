@@ -39,6 +39,19 @@
    - Files affected:
    - Verification step:
 
+## Breaking-Change Migration Checklist
+
+- Prior and new upstream commits recorded: `[ ]`
+- Deleted upstream-path inventory captured from `git -C agents diff --diff-filter=D --name-only <old> <new>`: `[ ]`
+- Matching host mirrors reviewed; retired agent-managed mirrors removed or user-data preservation proposal approved: `[ ]`
+- Host `AGENTS.md` directs agents to `./agents/RULES.md` and includes the TODO explicit-direction boundary: `[ ]`
+- Root `TODO.md` exists; existing user-authored content was preserved: `[ ]`
+- Host-managed journal template and playbooks require automatic detailed journal updates after completed work: `[ ]`
+- Stale-reference checks completed from the deleted-path inventory: `[ ]`
+- `python agents/scripts/regenerate_plan_indexes.py --check --repo-root .` passed: `[ ]`
+- `git diff --check` passed: `[ ]`
+- Rollback sources and commands recorded: `[ ]`
+
 ## Verification Results
 
 - `python agents/scripts/regenerate_plan_indexes.py --check --repo-root .`:

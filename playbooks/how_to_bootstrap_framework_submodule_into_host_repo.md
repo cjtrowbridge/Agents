@@ -26,8 +26,8 @@ Provide a repeatable workflow for first-time integration of this framework as `.
    - Ensure these host directories exist:
      - `./plans/future/`, `./plans/current/`, `./plans/past/`
      - `./journal/`
-     - `./kanban/`
      - `./downtime/reports/pending/`, `./downtime/reports/reviewed/`
+   - Ensure root `./TODO.md` exists as user-owned brainstorming space; agents may use it only when the user specifically directs them to do so.
 
 4. **Bootstrap Host Shim Files**
    - Ensure host shim files exist (`./AGENTS.md`, and runtime-specific variants as needed).

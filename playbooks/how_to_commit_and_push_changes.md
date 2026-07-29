@@ -41,14 +41,11 @@ Provide a repeatable workflow to summarize staged changes, propose a commit mess
         *   Active plan path + checklist items updated in this checkpoint.
         *   A single-sentence commit message suggestion (imperative mood).
 
-6.  **Prompt Journal Create/Update**
-    *   After presenting the summary, ask:
-        *   whether to create today's journal entry (if missing), and/or
-        *   whether to append relevant checkpoint details to today's journal entry.
-    *   If approved, perform the journal create/update before commit.
-    *   If non-journal repository changes are in scope and journal create/update is not approved, stop before commit.
+6.  **Update Today's Journal**
+    *   Before presenting the completion summary or committing, create or append to today's journal entry without requesting permission.
+    *   Record what was completed, why it was done, where the work is heading next (or that it is complete), and relevant follow-up.
 
-7.  **Request Approval**
+7.  **Request Approval for Git Actions**
     *   Ask the user to approve:
         *   the change summary,
         *   the commit message,

@@ -151,7 +151,7 @@ Key: `[ ]` pending task, `[x]` completed task, `[?]` needs validation, `[-]` clo
 - [x] 9. Transition framework governance from playbook-gated execution to plan-gated execution.
   - [x] 9.1 Complete deep-dive policy audit across core framework artifacts.
     - [x] 9.1.1 Audit root policy/bootstrap files for conflicting authority language.
-      - [x] 9.1.1.1 Review `README.md`, `RULES.md`, `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, `GEMINI.md`, and `OPENCODE.md`.
+      - [x] 9.1.1.1 Review the root policy and instruction files.
     - [x] 9.1.2 Audit playbooks for lifecycle and ambiguity boundaries that still center playbooks as execution authority.
       - [x] 9.1.2.1 Locate lifecycle clauses using `Prompt -> Plan (based on a known playbook) -> ...`.
     - [x] 9.1.3 Audit references/templates/downtime tasks for policy coupling to playbook-first execution.
@@ -182,8 +182,6 @@ Key: `[ ]` pending task, `[x]` completed task, `[?]` needs validation, `[-]` clo
       - [x] 9.4.2.1 Require plan checklist delta verification before commit.
     - [x] 9.4.3 Update `playbooks/how_to_commit_and_push_journal_checkpoints.md`.
       - [x] 9.4.3.1 Require checkpoint summary to include active plan path and item-level status updates.
-    - [x] 9.4.4 Update `playbooks/how_to_move_kanban_tasks_verbatim.md`.
-      - [x] 9.4.4.1 Add plan-binding rule when kanban move is part of execution work.
     - [x] 9.4.5 Update `playbooks/debugging_changes_that_lead_to_errors.md`.
       - [x] 9.4.5.1 Require proposed fixes to map to existing plan atoms or approved plan revisions.
     - [x] 9.4.6 Update `playbooks/how_to_review_changes_for_risk_and_regression.md`.

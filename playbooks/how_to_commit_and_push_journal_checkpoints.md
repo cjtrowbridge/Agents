@@ -31,14 +31,12 @@ Commit and push approved journal checkpoint snapshots while keeping journal work
      - active plan path,
      - checklist items updated in this checkpoint,
      - planned journal additions (if not yet written),
-     - any kanban moves (verbatim lines).
 
-5. **Prompt Journal Create/Update**
-   - After summary, ask whether to create/update today's journal entry with checkpoint details.
-   - If approved, apply the journal update before commit.
+5. **Update Today's Journal Automatically**
+   - Before the completion summary and without requesting permission, create or update today's journal entry with the checkpoint details.
+   - Record what was completed, why it was done, where the work is heading next (or that it is complete), and relevant follow-up.
    - If mixed-mode changes occurred, ensure active plan checklist updates are applied before commit.
    - If mixed-mode changes touched plan files, run `python scripts/regenerate_plan_indexes.py` before commit.
-   - If non-journal repository changes are in scope and journal create/update is not approved, stop before commit.
 
 6. **Apply Commit Approval Rule**
    - In `journal-only mode`, commit approval prompt is not required.
@@ -75,6 +73,6 @@ Prompt -> Select/Create Plan (using relevant playbook guidance) -> Request appro
 
 If this occurs inside a git repo:
 - Review `git status` and relevant diffs.
-- Prompt for journal create/update after summary; apply approved journal edits before commit.
+- Update today's journal automatically before the completion summary and commit flow.
 - Suggest a commit message that summarizes the completed checkpoint.
 - Commit after checkpoint completion using the applicable approval mode above.

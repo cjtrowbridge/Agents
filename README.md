@@ -14,7 +14,8 @@ Primary deployment model:
 ## Canonical Rules
 
 - Canonical policy source: `./agents/RULES.md` (from host root)
-- Shim files (`AGENTS.md`, `CODEX.md`, `CLAUDE.md`, `GEMINI.md`, `OPENCODE.md`) should direct runtimes to that policy source.
+- The root `AGENTS.md` instruction file should direct runtimes to that policy source.
+- Root `TODO.md` is mandatory, user-owned brainstorming space; agents use it only when the user specifically directs them to do so.
 
 ## Host Bootstrap (First-Time Integration)
 
@@ -23,9 +24,8 @@ Primary deployment model:
 3. Ensure required host operational directories exist:
    - `./plans/future/`, `./plans/current/`, `./plans/past/`
    - `./journal/`
-   - `./kanban/`
    - `./downtime/reports/pending/`, `./downtime/reports/reviewed/`
-4. Ensure host shim file(s) exist (for example `./AGENTS.md`) and point to `./agents/RULES.md`.
+4. Ensure host `./AGENTS.md` points to `./agents/RULES.md`, and create a root user-owned `./TODO.md`.
 5. Copy host-managed framework directories from `./agents/` when missing:
    - `./playbooks/`
    - `./references/`
@@ -41,7 +41,7 @@ Example command sequence from host root:
 ```bash
 git submodule add <framework-repo-url> agents
 git submodule update --init --recursive agents
-mkdir -p plans/future plans/current plans/past journal kanban downtime/reports/pending downtime/reports/reviewed
+mkdir -p plans/future plans/current plans/past journal downtime/reports/pending downtime/reports/reviewed
 cp agents/AGENTS.md AGENTS.md
 cp -R agents/playbooks playbooks
 cp -R agents/references references
@@ -56,15 +56,15 @@ If host files/directories already exist, do not overwrite blindly; follow synthe
 Host-owned runtime artifacts (project-specific state):
 - `./plans/`
 - `./journal/`
-- `./kanban/`
 - `./downtime/reports/`
+- `./TODO.md` (user-owned; not agent execution work unless explicitly directed)
 
 Host-managed framework working copies (copied/synthesized from submodule):
 - `./playbooks/`
 - `./references/`
 - `./templates/`
 - `./scripts/`
-- host shim files (for example `./AGENTS.md`)
+- host `./AGENTS.md`
 
 Submodule-owned upstream defaults:
 - `./agents/RULES.md` (authoritative policy contract)
@@ -115,6 +115,20 @@ Required verification examples:
 
 Rollback expectation:
 - keep a rollback path for submodule pointer and synthesized host files if validation fails.
+
+## Downstream Migration for the Current Breaking Change
+
+When updating a downstream `./agents` submodule to this revision, follow the detailed procedure in `./playbooks/how_to_update_submodule_and_synthesize_host_overrides.md` under **Required Migration for This Upstream Change**.
+
+The host update must:
+
+1. Compare old and new upstream revisions to inventory retired artifacts before altering host files.
+2. Remove matching agent-managed host mirrors and stale guidance while preserving any user-authored data through an approved migration/export decision.
+3. Ensure root `TODO.md` exists, remains user-owned, and is never used as agent task discovery unless the user explicitly directs it.
+4. Synthesize host-managed journal playbooks/templates so completed work is logged automatically with what changed, why, next direction, and follow-up.
+5. Validate the host with the deleted-path inventory, plan-index check, and `git diff --check`; record results and rollback sources in the synthesis report.
+
+The migration does not authorize agents to overwrite an existing user-owned `TODO.md`, or to commit/push without the normal approval required by host policy.
 
 ## Downstream Compatibility Maintenance (README Contract)
 

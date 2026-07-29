@@ -12,11 +12,11 @@ When making *any* change, you must review and update the following files if they
 
 1.  **`./README.md`** (Root): High-level design/project specs, roadmap/plans migration guidance, and submodule integration guidance.
 2.  **`./RULES.md`**: Canonical organizational structure, policy, indexes, and operational protocols.
-3.  **Root LLM shim files** (e.g., `./AGENTS.md`, `./GEMINI.md`, `./CLAUDE.md`, `./CODEX.md`, `./OPENCODE.md`) when bootstrap instructions change.
+3.  **`./AGENTS.md`** when bootstrap instructions change, and **root `./TODO.md`** when the user explicitly directs a change to their brainstorming list.
 4.  **`./playbooks/*.md`**: Any standard operating procedures or workflows that may be altered by the change.
 5.  **`./references/*.md`**: Reusable guidance patterns shared across multiple playbooks or prompts.
 6.  **`./templates/*.md`**: Reusable output formats used to standardize agent results.
-7.  **`./journal/*.md`** and **`./kanban/*.md`**: Daily operational artifacts and board state (when affected).
+7.  **`./journal/*.md`**: Daily operational artifacts (when affected).
 8.  **`./downtime/*.md`**, **`./downtime/reports/*`**, and **`./docs/*`** (including **`./docs/assimilations/*`**): Maintenance task definitions, downtime reports, and supplemental framework artifacts (when affected).
 
 ## 2. Operational Constraints (The Edge Protocol)
@@ -62,12 +62,13 @@ Downtime tasks are analysis-only. When executing any task in `./downtime/`:
 
 When this framework is consumed in a host repo as `./agents`:
 * Treat `./agents/RULES.md` as canonical policy source from host root.
-* Ensure host root has required operational directories (`plans`, `journal`, `kanban`, `downtime/reports`).
+* Ensure host root has required operational directories (`plans`, `journal`, `downtime/reports`) and a root `TODO.md`.
 * Ensure host shim files direct runtimes to `./agents/RULES.md`.
 * Host-managed framework directories (`./playbooks`, `./references`, `./templates`, `./scripts`) should be copied from submodule when missing.
 * If host-managed copies already exist, synthesize host + upstream changes; do not blindly overwrite host files.
 * Agents may recommend merge resolutions but must always ask the user before final merge decisions.
 * Keep `README.md` updated as the downstream integration/update contract whenever upstream changes affect bootstrap, merge, or migration behavior.
+* During downstream updates, agents must apply the current breaking-change migration procedure in `./playbooks/how_to_update_submodule_and_synthesize_host_overrides.md`, preserve user-owned TODO content, and record the migration evidence in the synthesis report.
 
 ## 3. Self-Evolving Workflow (Required)
 
@@ -105,40 +106,39 @@ Note: "Commit after approved checkpoint completion" is an execution requirement,
 Commit history is a first-class UI surface. The user should see a list of recent completed tasks, so commit messages must be clear and task-scoped.
 
 ### Completion Summary Check (Required)
-Before summarizing completed work to the user, check `./downtime/reports/pending/` for pending downtime reports (ignore the folder's `README.md`).
+Before summarizing completed work to the user, update today's journal entry and check `./downtime/reports/pending/` for pending downtime reports (ignore the folder's `README.md`).
 * If any pending report artifacts (excluding `README.md`) exist, explicitly tell the user that downtime reports are pending review and list their paths.
 * If none exist, no special note is required.
 After the completion summary is presented:
-* Prompt the user to create or update today's journal entry with relevant checkpoint details (if needed).
 * Include active plan path and checklist item deltas in checkpoint summary content.
 * Prompt for commit/push action using the applicable playbook approval mode.
 
-### Journal + Kanban Operational Policies
+### Journal and User TODO Operational Policies
 
-These policies govern daily journaling and kanban usage in this repository.
+These policies govern daily journaling and the user-owned TODO list in this repository.
 
 #### Journal Logging Requirement
-* Any work that changes repository state must be logged in today's journal entry at `./journal/YYYY-MM-DD.md`.
+* Every completed work checkpoint must be logged in today's journal entry at `./journal/YYYY-MM-DD.md`; agents do not need permission to create or update that entry.
 * Journal log entries should be append-only unless the user explicitly asks to edit prior text.
-* The journal create/update prompt should occur after the completion summary and before commit/push execution.
-* If non-journal repository changes are in scope and journal create/update is not approved, do not commit.
+* Each completed-work entry must state what was done, why it was done, where the work is heading next (or that it is complete), and any relevant follow-up.
+* Update the journal before presenting the completion summary or entering commit/push flow.
 
 #### Journal Field Ownership Contract
 * `Today's Intentions` and `Notes / Reflections` are user-only fields.
 * Agents may only copy user-provided text verbatim into user-only fields.
 * If user-only input is not provided, leave an empty list item (`-`).
-* `Kickoff Context`, `Kanban State Summary`, and `Repo Work Log` are agent-managed fields.
+* `Kickoff Context` and `Repo Work Log` are agent-managed fields.
 
-#### Kanban Immutability Contract
-* Kanban task lines are immutable user-authored data.
-* Moving tasks must preserve exact line text byte-for-byte.
-* Do not rephrase, normalize, merge, reorder, or clean up task text unless the user explicitly requests it.
+#### User TODO Ownership Contract
+* Root `./TODO.md` is mandatory and belongs to the user as a space to brainstorm eventual work.
+* TODO entries are not agent tasks or execution authority.
+* Agents must not inspect, select, prioritize, or work on TODO entries unless the user specifically directs them to do so.
+* Agents may modify `TODO.md` only when the user explicitly requests that change.
 
 #### Snapshot Commit Rule (Conversation Checkpoints)
 * Commits represent completed conversation checkpoints, not completion of the broader plan.
 * Before committing, present a clear snapshot summary.
 * Snapshot summary must cite the active plan path and checklist item updates.
-* After summary, prompt to create/update today's journal entry with the checkpoint details.
 * Explicit approval is required before commit unless staged scope is journal-only.
 * Journal-only exception: if staged changes are only journal updates, commit/push may proceed without a commit approval prompt.
 
@@ -153,11 +153,6 @@ These policies govern daily journaling and kanban usage in this repository.
 * Startup kickoff begins with discovery only (read-only); do not write files before user approval.
 * Proposed startup baseline artifacts:
   * `./journal/YYYY-MM-DD.md`
-  * `./kanban/today.md`
-  * `./kanban/this_week.md`
-  * `./kanban/eventually.md`
-  * `./kanban/ideas.md`
-* `./kanban/reminders.md`
 * Present proposed creates/updates first, then request approval before any startup write.
 
 ### Plans Operational Policies
@@ -226,8 +221,7 @@ Current playbooks:
 * `./playbooks/how_to_migrate_readme_roadmaps_to_plans_system.md` - Detailed migration workflow for converting README roadmap/milestone content into plan files and per-status indexes.
 * `./playbooks/debugging_changes_that_lead_to_errors.md` - Evidence-first debugging workflow for changes that cause errors.
 * `./playbooks/how_to_assimilate_another_agentic_framework.md` - How to study similar frameworks, extract transferable lessons, and propose atomic grafts into this project.
-* `./playbooks/how_to_run_daily_kickoff_and_capture_snapshot.md` - Startup workflow for daily journal/kanban readiness, intent capture, and checkpoint summary.
-* `./playbooks/how_to_move_kanban_tasks_verbatim.md` - Verbatim-only kanban move workflow that preserves exact task text.
+* `./playbooks/how_to_run_daily_kickoff_and_capture_snapshot.md` - Startup workflow for daily journal readiness, intent capture, and checkpoint summary.
 * `./playbooks/how_to_review_changes_for_risk_and_regression.md` - Bug/risk-first review workflow for code and documentation changes.
 * `./playbooks/how_to_add_or_modify_a_tool_wrapper_safely.md` - Safety-first workflow for adding or changing tool wrappers and tool integrations.
 * `./playbooks/how_to_add_or_modify_hud_tab_contents.md` - Layout and lifecycle workflow for responsive, non-overlapping HUD tab body content.
@@ -241,7 +235,6 @@ Current references:
 * `./references/how_to_shape_agent_tone_and_timbre.md` - Reusable guidance for writing prompts/instructions with consistent tone and behavioral shaping.
 * `./references/verification_patterns_for_docs_and_policy.md` - Verification patterns for confirming documentation and policy artifacts are usable, not just present.
 * `./references/interaction_checkpoints_and_automation_boundaries.md` - Rules for when to ask the user vs automate vs pause at approval/checkpoint boundaries.
-* `./references/kanban_verbatim_handling.md` - Canonical rules for immutable kanban task identity and verbatim move evidence.
 * `./references/conversation_checkpoint_commits.md` - Guidance for defining, summarizing, and approving conversation checkpoint commits.
 
 ### Templates Index
@@ -256,8 +249,7 @@ Current templates:
 * `./templates/playbook_proposal.md` - Template for proposing a new playbook before implementation.
 * `./templates/assimilation_trail_entry.md` - Template for recording adopted/rejected lessons from an external framework review.
 * `./templates/downtime_report.md` - Template for downtime task reports (analysis-only suggested changes, no direct edits).
-* `./templates/daily_journal_entry.md` - Canonical daily journal structure for kickoff context, intentions, kanban summary, and repo work log.
-* `./templates/kanban_board.md` - Canonical kanban board structure for horizon- and thematic-based boards.
+* `./templates/daily_journal_entry.md` - Canonical daily journal structure for kickoff context, intentions, and repo work log.
 
 ### Downtime Task Index
 

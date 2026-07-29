@@ -39,7 +39,7 @@ Key: `[ ]` pending task, `[x]` completed task, `[?]` needs validation, `[-]` clo
       - [x] 2.1.1.1 Define baseline content for host `./AGENTS.md` to point at `./agents/RULES.md`.
     - [x] 2.1.2 Define required host operational directories.
       - [x] 2.1.2.1 Define minimum host `./plans/future`, `./plans/current`, `./plans/past`.
-      - [x] 2.1.2.2 Define minimum host `./journal/` and `./kanban/`.
+      - [x] 2.1.2.2 Define minimum host `./journal/`.
       - [x] 2.1.2.3 Define minimum host `./downtime/reports/pending` and `./downtime/reports/reviewed`.
       - [x] 2.1.2.4 Apply selected policy for `./playbooks/`, `./references/`, `./templates/`, and `./scripts/`:
         - [x] 2.1.2.4.1 Copy these to host root when absent.
@@ -117,7 +117,7 @@ Key: `[ ]` pending task, `[x]` completed task, `[?]` needs validation, `[-]` clo
 
 - [x] 7. Update supporting framework artifacts for consistency with README contract.
   - [x] 7.1 Update root shim files in this repository to reflect downstream host usage patterns.
-    - [x] 7.1.1 Ensure shim language is consistent across `AGENTS.md`, `CODEX.md`, `CLAUDE.md`, `GEMINI.md`, `OPENCODE.md`.
+    - [x] 7.1.1 Ensure root agent instruction language is consistent with the canonical policy.
       - [x] 7.1.1.1 Ensure host-root guidance references `./agents/RULES.md` consistently.
   - [x] 7.2 Add or update playbook(s) for downstream integration/update operations.
     - [x] 7.2.1 Add/update bootstrap playbook for first-time submodule integration and host-root setup.

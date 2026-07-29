@@ -105,7 +105,7 @@ Provide a repeatable, low-risk workflow for migrating roadmap/milestone content 
      - index files updated,
      - README sections changed.
    - Identify which migrated plan(s) become active execution plans in `plans/current/`.
-   - Prompt to update today's journal entry with migration checkpoint details.
+   - Automatically update today's journal entry with what was completed, why, next direction, and follow-up details.
    - Follow the applicable commit playbook for approval, commit, and push.
 
 9. **Select Active Plan for Execution**
